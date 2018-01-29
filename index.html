@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Game</title>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	<link rel="stylesheet" href="styles.css">
+	
+	<!-- Jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- PointJS  -->
+	<script src="pointjs_0.2.0.3.js"></script>
+
+	<!-- MATERIALIZE  -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+</head>
+<body>
+
+
+
+<div id="loginForm" style="z-index:999;">
+	<div class="contaier">
+		<div class="form">
+			<input placeholder="Ваш ник" value="kek" type="text" class="nicknameInput" id="nickname">
+			<div onclick="userLogin(); return false;" class="loginButton">Войти</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Socket IO  -->
+<script src="/socket.io/socket.io.js"></script>
+<!-- Game -->
+<script src="game.js"></script>
+<script>
+
+
+
+</script>
+
+
+</body>
+</html>
