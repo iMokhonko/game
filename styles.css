@@ -34,3 +34,14 @@ body {
 	background: #74b9ff;
 	color: #fff;
 }
+
+#game  {
+	display: none;
+}
+
+.box {
+	width: 75px;
+	height: 75px;
+	background: #fff;
+	position: absolute;
+}

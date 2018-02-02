@@ -34,52 +34,64 @@ var players = [];
 
 // новое подключение, клиент зашел
 io.on('connection', function(socket) {
-  
 
+	// в массив подключений добавляемидентификатор сокета
+	connections.push(socket.id);
+
+	// функция для игрока которые зашел и игрока который вышел
+	// он отправляет полный массив игроков которые онлайн
+	// на клиенте все синхронизируется
 	function updatePlayers() {
-		var upd_players = [];
-		for(var i = 0; i < players.length; i++) {
-			upd_players[i] = { 
-				nickname : players[i].nickname,
-				x : players[i].x,
-				y : players[i].y
-			};
-		}
-		io.emit('updatePlayers', upd_players);
+
+		io.emit('updatePlayers', players);
+		console.log(players);
+
 	}
 
-  console.log('new connection ' + socket.id);
-  connections.push(socket.id);
 
-  // получаем данные от клиента о новом пользователе
-  socket.on('userLogin', function(user) {
+  // получаем от клиента данные о новом игроке
+  socket.on('userLogin', function(player) {
   	
   	players.push({
   		socketId : socket.id,
-  		nickname : user.nickname,
-  		x : 0,
-  		y : 0
+  		nick : player.nick,
+  		x : player.x,
+  		y : player.y
   	});
+
+  	//console.log('new connection ' + socket.id);
 
   	// отправляем данные о игроках
   	updatePlayers();
 
-
   });
-
 
   socket.on('playerMove', function(player) {
-  	players[player.playerId].x = player.x;
-	players[player.playerId].y = player.y;
+  	
+  	console.log(players);
+
+  	for (var i = 0; i < players.length; i++) {
+  		if(player.nick == players[i].nick) {
+  			players[i].x = player.x;
+  			players[i].y = player.y;
+  			break;
+  		}
+  	}
+
   	io.emit('playerMove', player);
+
+  	// отправляем данные о игроках
+  	updatePlayers();
+
   });
+
+
 
   // клиент полностью закрыл вкладку
   socket.on('disconnect', function(){
+  	
   	var connectionIndex = connections.indexOf(socket.id);
   	connections.splice(connectionIndex, 1);
-
-  	var playerIndex;
 
   	for(var i = 0; i < players.length; i++) {
   		if(players[i].socketId == socket.id) {
