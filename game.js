@@ -6,13 +6,17 @@ var players = [];
 var player = {};
 
 
+function Player(opts) {
+	this.nick = opts.nick;
+	this.x = opts.x;
+	this.y = opts.y;
+}
+
 function userLogin() {
 	var nick = $("#nickname").val();
-	player = {
-		nick : nick,
-		x : 100,
-		y : 100
-	};
+
+	player = new Player({ nick : nick, x : 100, y : 100 });
+
 	socket.emit('userLogin', player);
 	$("#game").show();
 	$('#loginForm').hide();
